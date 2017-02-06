@@ -9,20 +9,15 @@ const minifycss = require('gulp-clean-css')
 const concat = require('gulp-concat')
 const imagemin = require('gulp-imagemin')
 const sass = require('gulp-sass')
-// const clean = require('gulp-clean')
-// const rename = require('gulp-rename')
 
 // JAVASCRIPT
 const eslint = require('gulp-eslint')
 const browserify = require('browserify')
+const babelify = require('babelify')
 const source = require('vinyl-source-stream')
 const buffer = require('vinyl-buffer')
-const globby = require('globby')
-const through = require('through2')
-const gutil = require('gulp-util')
 const uglify = require('gulp-uglify')
 const sourcemaps = require('gulp-sourcemaps')
-const reactify = require('reactify')
 
 const bases = {
   app: 'app/',
@@ -30,6 +25,7 @@ const bases = {
 }
 
 const paths = {
+  app: 'app/scripts/app.js',
   scripts: ['app/scripts/**/*.js', '!scripts/libs/**/*.js'],
   // libs:    ['scripts/libs/jquery/dist/jquery.js'],
   styles: ['app/sass/**/*.scss'],
@@ -76,53 +72,17 @@ gulp.task('lint', () => {
     .pipe(eslint.failAfterError())
 })
 
-// Process scripts and concatenate them into one output file
-// gulp.task('scripts', function () {
-//   gulp.src(paths.scripts)
-//     .pipe(concat('app.min.js'))
-//     .pipe(uglify())
-//     .pipe(gulp.dest(bases.dist))
-//     .pipe(browserSync.stream({match: paths.dist}))
-// })
-
 gulp.task('scripts', function () {
-  // gulp expects tasks to return a stream, so we create one here.
-  var bundledStream = through()
-
-  bundledStream
-    // turns the output bundle stream into a stream containing
-    // the normal attributes gulp plugins expect.
-    .pipe(source('app.min.js'))
-    // the rest of the gulp task, as you would normally write it.
-    // here we're copying from the Browserify + Uglify2 recipe.
-    .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
-      // Add gulp plugins to the pipeline here.
+  // app.js is your main JS file with all your module inclusions
+  return browserify({entries: paths.app, debug: true})
+      .transform(babelify, { presets: ['es2015'] })
+      .bundle()
+      .pipe(source('app.min.js'))
+      .pipe(buffer())
+      .pipe(sourcemaps.init())
       .pipe(uglify())
-      .on('error', gutil.log)
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(bases.dist))
-
-  // "globby" replaces the normal "gulp.src" as Browserify
-  // creates it's own readable stream.
-  globby(paths.scripts).then(function (entries) {
-    // create the Browserify instance.
-    var b = browserify({
-      entries: entries,
-      debug: true,
-      transform: [reactify]
-    })
-
-    // pipe the Browserify stream into the stream we created earlier
-    // this starts our gulp pipeline.
-    b.bundle().pipe(bundledStream)
-  }).catch(function (err) {
-    // ensure any errors from globby are handled
-    bundledStream.emit('error', err)
-  })
-
-  // finally, we return the stream, so gulp knows when this task is done.
-  return bundledStream
+      .pipe(sourcemaps.write('./maps'))
+      .pipe(gulp.dest(bases.dist))
 })
 
 // Imagemin images and ouput them in dist
@@ -140,7 +100,7 @@ gulp.task('watch', function () {
   })
   gulp.watch(paths.html, ['html'])
   gulp.watch(paths.styles, ['styles'])
-  gulp.watch(paths.scripts, ['scripts'])
+  gulp.watch(paths.scripts, ['lint', 'scripts'])
   gulp.watch(paths.images, ['imagemin'])
 })
 
