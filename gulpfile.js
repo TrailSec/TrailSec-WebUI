@@ -25,12 +25,11 @@ const bases = {
 }
 
 const paths = {
-  app: 'app/scripts/app.js',
-  scripts: ['app/scripts/**/*.js', '!scripts/libs/**/*.js'],
-  // libs:    ['scripts/libs/jquery/dist/jquery.js'],
-  styles: ['app/sass/**/*.scss'],
-  html: ['app//**/*.html'],
-  images: ['app/images/**/*.png']
+  app: 'app/js/app.js',
+  scripts: ['app/js/**/*.js', '!js/libs/**/*.js'],
+  styles: ['app/styles/**/*.scss', 'app/styles/**/*.sass', 'app/styles/**/*.css'],
+  html: ['app/**/*.html'],
+  images: ['app/images/*']
 }
 
 // Copy HTML file over to /dist
@@ -43,6 +42,7 @@ gulp.task('html', function () {
 // Process SCSS files and concatenate them into one output file
 gulp.task('styles', function () {
   gulp.src(paths.styles)
+    .pipe(sourcemaps.init())
     .pipe(sass({
       outputStyle: 'compressed'
     }).on('error', sass.logError))
@@ -51,6 +51,7 @@ gulp.task('styles', function () {
     }))
     .pipe(concat('style.min.css'))
     .pipe(minifycss())
+    .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest(bases.dist))
     .pipe(browserSync.stream({match: paths.dist}))
 })
@@ -75,11 +76,13 @@ gulp.task('lint', () => {
 gulp.task('scripts', function () {
   // app.js is your main JS file with all your module inclusions
   return browserify({entries: paths.app, debug: true})
-      .transform(babelify, { presets: ['es2015'] })
+      // .transform(babelify, { presets: ['es2015'] })
+      .transform(babelify, {presets: ['es2015'], sourceMaps: true})
       .bundle()
       .pipe(source('app.min.js'))
       .pipe(buffer())
-      .pipe(sourcemaps.init())
+      .pipe(sourcemaps.init({loadMaps: true}))
+      // .pipe(uglify({ compress: false }))
       .pipe(uglify())
       .pipe(sourcemaps.write('./maps'))
       .pipe(gulp.dest(bases.dist))
