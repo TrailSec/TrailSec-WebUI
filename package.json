@@ -1,0 +1,51 @@
+{
+  "name": "web-ui",
+  "description": "Web UI for security guard app",
+  "version": "1.0.0",
+  "main": "dist/app.js",
+  "scripts": {
+    "dev": "gulp serve"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "browser-sync": "^2.18.7",
+    "browserify": "^14.0.0",
+    "eslint": "^3.15.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-html": "^2.0.0",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "globby": "^6.1.0",
+    "graceful-fs": "^4.1.11",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^2.3.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-eslint": "^3.0.1",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.4.1",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.8",
+    "reactify": "^1.1.1",
+    "through2": "^2.0.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tohjustin/webUI.git"
+  },
+  "author": "CPEN391-GROUP14",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tohjustin/webUI/issues"
+  },
+  "homepage": "https://github.com/tohjustin/webUI#readme",
+  "engine": "node >= 6.9.5"
+}
