@@ -1,7 +1,8 @@
-import * as firebase from 'firebase'
+// import * as hello from './hello.js'
+const hello = require('./hello.js')
+const firebase = require('firebase')
 
 // Initialize Firebase
-// TODO: Replace with your project's customized code snippet
 var config = {
   apiKey: '<API_KEY>',
   authDomain: '<PROJECT_ID>.firebaseapp.com',
@@ -9,3 +10,5 @@ var config = {
   storageBucket: '<BUCKET>.appspot.com'
 }
 firebase.initializeApp(config)
+
+console.log(`Importing ${hello}`)
