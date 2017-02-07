@@ -7,8 +7,9 @@ module.exports = {
     var google = googleMaps.window
     var map = googleMaps.map
 
-    return new google.maps.Marker({
+    var marker = new google.maps.Marker({
       position: {lat: lat, lng: lng},
+      animation: google.maps.Animation.DROP,
       icon: {
         url: '../images/map-marker-icon.png',
         size: new google.maps.Size(32, 32),
@@ -20,8 +21,10 @@ module.exports = {
         coords: [15.5, 0, 5, 20, 32, 32, 27, 20],
         type: 'poly'
       },
+      optimized: false,
       map: map
     })
+    return marker
   },
 
   // Create a marker on the google map (based on the provided lat, lng)
