@@ -4,7 +4,12 @@
 }
 
 .list-item {
-  padding: 10px 15px;
+  display: flex; /* establish flex container */
+  flex-direction: row; /* make main axis horizontal */
+  justify-content: flex-start; /* center items vertically, in this case */
+  align-items: center; /* center items horizontally, in this case */
+
+  padding: 10px 10px;
   border-bottom: 1px solid #eee;
 }
 .list-item:last-child {
@@ -12,14 +17,17 @@
 }
 
 .list-item-icon {
-  display: inline-block;
-  width: 40px; // 0.2 * (400 - 30)px
+  width: 40px;
+  margin: 10px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .list-item-description {
-  display: inline-block;
-  width: 320px; // 0.8 * (400 - 30)px
-
+  width: 320px;
   .content {
     color: #333;
     font-size: 16px;
