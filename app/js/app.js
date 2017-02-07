@@ -116,7 +116,7 @@ GoogleMapsLoader.load(google => {
 
 // Sample function to test out marker + infoWindow creation
 var ii = 0
-document.getElementById('abc').addEventListener('click', function () {
+document.getElementById('addMarker').addEventListener('click', function () {
   if (ii >= Routes.routeA.length) {
     window.alert('No more markers to add!')
   } else {
@@ -125,4 +125,8 @@ document.getElementById('abc').addEventListener('click', function () {
     GOOGLE_MAPS.infoWindows.push(GoogleMapsHelper.createInfoWindow(GOOGLE_MAPS, tempMarker, Routes.routeA[ii].timestamp))
     ii++
   }
+})
+document.getElementById('clearMarkers').addEventListener('click', function () {
+  ii = 0
+  GoogleMapsHelper.clearMarkers(GOOGLE_MAPS)
 })

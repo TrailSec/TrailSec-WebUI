@@ -27,6 +27,15 @@ module.exports = {
     return marker
   },
 
+  // Remove all markers
+  clearMarkers: function (googleMaps) {
+    for (let i = 0; i < googleMaps.markers.length; i++) {
+      console.log('lol')
+      googleMaps.markers[i].setMap(null)
+    }
+    googleMaps.markers.length = 0
+  },
+
   // Create a marker on the google map (based on the provided lat, lng)
   createInfoWindow: function (googleMaps, marker, timestamp) {
     var google = googleMaps.window
