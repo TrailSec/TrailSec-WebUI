@@ -1,17 +1,21 @@
 import GoogleMapsLoader from 'google-maps'
 import GoogleMapsHelper from './google-maps-helper'
 import Routes from './route-data'
-var GMAP
-var GMAP_MAP_INSTANCE
-var GMAP_MARKER_LIST = []
-var GMAP_ROUTES_LIST = []
+
+// Global "Google-Maps" object for tracking created items
+var GOOGLE_MAPS = {
+  window: undefined,
+  map: undefined,
+  markers: [],
+  infoWindows: [],
+  routes: []
+}
 
 GoogleMapsLoader.KEY = 'AIzaSyAAAAffx49N0OrzfkADhTms8cc-IFzrUHI'
 GoogleMapsLoader.REGION = 'CA'
 GoogleMapsLoader.load(google => {
-  // var uluru = {lat: 49.2765, lng: -123.2177}
-  GMAP = google
-  GMAP_MAP_INSTANCE = new google.maps.Map(document.getElementById('map'), {
+  GOOGLE_MAPS.window = google
+  GOOGLE_MAPS.map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
     center: {lat: 49.26256765463452, lng: -123.25080871582031},
     mapTypeControl: false, // disable toggle between MAP/SATELLITE
@@ -26,16 +30,21 @@ GoogleMapsLoader.load(google => {
   //   console.log(lat + ', ' + lng)
   // })
 
-  GMAP_ROUTES_LIST.push(GoogleMapsHelper.drawRoute(GMAP, GMAP_MAP_INSTANCE, Routes.routeA))
+  // Sample function to test out polylines creation
+  GOOGLE_MAPS.routes.push(GoogleMapsHelper.drawRoute(GOOGLE_MAPS, Routes.routeA, '#C13A2C'))
 })
 
+// Sample function to test out marker + infoWindow creation
 var ii = 0
 document.getElementById('abc').addEventListener('click', function () {
   if (ii >= Routes.routeA.length) {
-    ii = 0
+    window.alert('No more markers to add!')
+  } else {
+    var tempMarker = GoogleMapsHelper.createMarker(GOOGLE_MAPS, Routes.routeA[ii].lat, Routes.routeA[ii].lng)
+    GOOGLE_MAPS.markers.push(tempMarker)
+    GOOGLE_MAPS.infoWindows.push(GoogleMapsHelper.createInfoWindow(GOOGLE_MAPS, tempMarker, Routes.routeA[ii].timestamp))
+    ii++
   }
-  GMAP_MARKER_LIST.push(GoogleMapsHelper.createMarker(GMAP, GMAP_MAP_INSTANCE, Routes.routeA[ii].lat, Routes.routeA[ii].lng))
-  ii++
 })
 
 // const firebase = require('firebase')
