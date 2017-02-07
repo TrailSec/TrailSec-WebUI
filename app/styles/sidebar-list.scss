@@ -1,0 +1,33 @@
+.list {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.list-item {
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+}
+.list-item:last-child {
+  border:none;
+}
+
+.list-item-icon {
+  display: inline-block;
+  width: 40px; // 0.2 * (400 - 30)px
+}
+
+.list-item-description {
+  display: inline-block;
+  width: 320px; // 0.8 * (400 - 30)px
+
+  .content {
+    color: #333;
+    font-size: 16px;
+  }
+  .time {
+    color: #999;
+    font-weight: 300;
+    font-size: 12px;
+    margin: 3px 0px;
+  }
+}

@@ -1,0 +1,36 @@
+.button-panel{
+  text-align: center;
+}
+.button {
+  display: inline-block;
+  width: 175px;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 5px;
+  -webkit-transition: background .3s;
+  transition: background .3s;
+
+  font-family: 'Lato', sans-serif;
+  font-weight: 800;
+  color: #fff;
+  border-width: 0px;
+}
+.button:hover {
+  text-decoration: none;
+}
+.subscribe.button {
+  background: #11a8ab;
+  margin-top: 10px;
+}
+.subscribe.button:hover {
+  background: #0F9295;
+}
+.sign-in.button {
+  background: #e64c65;
+  margin: 10px auto;
+}
+.sign-in.button:hover {
+  background: #cc324b;
+}

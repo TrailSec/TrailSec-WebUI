@@ -9,6 +9,7 @@ module.exports = {
 
     var marker = new google.maps.Marker({
       position: {lat: lat, lng: lng},
+      title: 'TEST',
       animation: google.maps.Animation.DROP,
       icon: {
         url: '../images/map-marker-icon.png',
