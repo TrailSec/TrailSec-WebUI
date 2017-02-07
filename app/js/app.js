@@ -1,4 +1,3 @@
-import GoogleMapsLoader from 'google-maps'
 import GoogleMapsHelper from './google-maps-helper'
 import Routes from './route-data'
 
@@ -11,28 +10,7 @@ var GOOGLE_MAPS = {
   routes: []
 }
 
-GoogleMapsLoader.KEY = 'AIzaSyAAAAffx49N0OrzfkADhTms8cc-IFzrUHI'
-GoogleMapsLoader.REGION = 'CA'
-GoogleMapsLoader.load(google => {
-  GOOGLE_MAPS.window = google
-  GOOGLE_MAPS.map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 17,
-    center: {lat: 49.26256765463452, lng: -123.25080871582031},
-    mapTypeControl: false, // disable toggle between MAP/SATELLITE
-    streetViewControl: false, // disable STREETVIEW
-    rotateControl: true
-  })
-
-  // google.maps.event.addListener(MAP_INSTANCE, 'click', function (event) {
-  //   var lat = event.latLng.lat()
-  //   var lng = event.latLng.lng()
-  //   // populate yor box/field with lat, lng
-  //   console.log(lat + ', ' + lng)
-  // })
-
-  // Sample function to test out polylines creation
-  GOOGLE_MAPS.routes.push(GoogleMapsHelper.drawRoute(GOOGLE_MAPS, Routes.routeA, '#e64c65'))
-})
+GoogleMapsHelper.createMap(GOOGLE_MAPS)
 
 // Sample function to test out marker + infoWindow creation
 var ii = 0
