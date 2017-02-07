@@ -8,47 +8,20 @@
   <link rel="stylesheet" href="./style.min.css">
 </head>
 
-<body class="main-container">
+<body id="app" class="main-container">
   <div id="sidepanel" class="block sidepanel-shadow">
     <div class="button-panel">
       <button id="addMarker" class="sign-in button">Add Marker</button>
       <button id="clearMarkers" class="subscribe button">Clear Marker</button>
     </div>
     <div class="list">
-      <div class="list-item">
+      <div v-for="coordinate in coordinates" class="list-item">
         <div class="list-item-icon">
           <img src="./images/map-marker-icon.png">
         </div>
         <div class="list-item-description">
-          <span class="content">Justin Toh has arrived at checkpoint #A-13</span>
-          <div class="time">1st Jan 2017, 12:40:12 (12mins ago)</div>
-        </div>
-      </div>
-      <div class="list-item">
-        <div class="list-item-icon">
-          <img src="./images/map-marker-icon.png">
-        </div>
-        <div class="list-item-description">
-          <span class="content">Justin Toh has arrived at checkpoint #A-12</span>
-          <div class="time">1st Jan 2017, 12:39:59 (13mins ago)</div>
-        </div>
-      </div>
-      <div class="list-item">
-        <div class="list-item-icon">
-          <img src="./images/map-marker-icon.png">
-        </div>
-        <div class="list-item-description">
-          <span class="content">Justin Toh has arrived at checkpoint #A-11</span>
-          <div class="time">1st Jan 2017, 12:38:05 (14mins ago)</div>
-        </div>
-      </div>
-      <div class="list-item">
-        <div class="list-item-icon">
-          <img src="./images/map-marker-icon.png">
-        </div>
-        <div class="list-item-description">
-          <span class="content">Justin Toh has arrived at checkpoint #A-10</span>
-          <div class="time">1st Jan 2017, 12:37:10 (15mins ago)</div>
+          <span class="content">{{ coordinate.content }}</span>
+          <div class="time">{{ coordinate.time }}</div>
         </div>
       </div>
     </div>
