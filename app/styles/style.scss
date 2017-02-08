@@ -2,6 +2,7 @@ body {
   font-family: 'Lato', sans-serif;
   float: left;
   margin: 0px;
+  overflow: hidden;
 }
 #sidepanel {
   display: block;
@@ -9,6 +10,7 @@ body {
   z-index: 10;
   height: 100vh;
   width: 400px;
+  overflow: hidden;
   border-radius: 0px !important;
   background-color: #ffffff;
 }

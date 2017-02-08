@@ -1,3 +1,5 @@
+@import 'variables';
+
 .button-panel{
   text-align: center;
 }
@@ -14,23 +16,23 @@
 
   font-family: 'Lato', sans-serif;
   font-weight: 800;
-  color: #fff;
+  color: $button-font-color;
   border-width: 0px;
 }
 .button:hover {
   text-decoration: none;
 }
-.subscribe.button {
-  background: #11a8ab;
-  margin-top: 10px;
-}
-.subscribe.button:hover {
-  background: #0F9295;
-}
 .sign-in.button {
-  background: #e64c65;
+  background: $primary-color;
   margin: 10px auto;
 }
 .sign-in.button:hover {
-  background: #cc324b;
+  background: $primary-color-accent;
+}
+.subscribe.button {
+  background: $secondary-color;
+  margin-top: 10px;
+}
+.subscribe.button:hover {
+  background: $secondary-color-accent;
 }

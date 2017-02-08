@@ -1,8 +1,10 @@
+@import 'variables';
+
 .list {
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  height: 570px;
-  overflow-y: scroll;
+  border-top: 1px solid $sidepanel-divider-color;
+  border-bottom: 1px solid $sidepanel-divider-color;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
 }
 
 .list-item {
@@ -12,7 +14,7 @@
   align-items: center; /* center items vertically */
 
   padding: 10px 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid $sidepanel-divider-color;
 }
 .list-item:last-child {
   border:none;
@@ -31,11 +33,11 @@
 .list-item-description {
   width: 320px;
   .content {
-    color: #333;
+    color: $primary-font-color;
     font-size: 16px;
   }
   .time {
-    color: #999;
+    color: $secondary-font-color;
     font-weight: 300;
     font-size: 12px;
     margin: 3px 0px;
