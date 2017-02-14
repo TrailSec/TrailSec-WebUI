@@ -15,13 +15,13 @@
       <button id="clearMarkers" class="subscribe button">Clear Marker</button>
     </div>
     <div class="list">
-      <div v-for="timeArrayElement in timeArray" class="list-item">
+      <div v-for="dataEntry in processedCheckInData" class="list-item">
         <div class="list-item-icon">
           <img src="./images/map-marker-icon.png">
         </div>
         <div class="list-item-description">
-          <span class="content">{{ timeArrayElement.content }}</span>
-          <div class="time">{{ timeArrayElement.time }}</div>
+          <span class="content">{{ dataEntry.content }}</span>
+          <div class="time">{{ dataEntry.time }}</div>
         </div>
       </div>
     </div>

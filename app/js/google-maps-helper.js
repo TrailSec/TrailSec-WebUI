@@ -134,6 +134,9 @@ module.exports = {
       optimized: false,
       map: map
     })
+
+    // Append newly created marker into an array for tracking purposes
+    googleMaps.markers.push(marker)
     return marker
   },
 
