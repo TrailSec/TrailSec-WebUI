@@ -2,22 +2,29 @@
 
 .list {
   border-top: 1px solid $sidepanel-divider-color;
-  border-bottom: 1px solid $sidepanel-divider-color;
+  // border-bottom: 1px solid $sidepanel-divider-color;
   height: calc(100vh - 80px);
   overflow-y: auto;
 }
 
 .list-item {
+  border-bottom: 1px solid $sidepanel-divider-color;
+}
+.list-item:last-child {
+  border-border: none;
+}
+
+.list-item-container {
   display: flex; /* establish flex container */
   flex-direction: row; /* make main axis horizontal */
   justify-content: flex-start; /* flush items to the left */
   align-items: center; /* center items vertically */
 
-  padding: 10px 10px;
-  border-bottom: 1px solid $sidepanel-divider-color;
+  padding: 10px 10px 10px 5px;
+  border-left: 5px solid transparent;
 }
-.list-item:last-child {
-  border:none;
+.list-item-container:hover{
+  border-left: 5px solid $primary-color;
 }
 
 .list-item-icon {
