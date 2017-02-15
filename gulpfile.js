@@ -57,33 +57,31 @@ gulp.task('styles', function () {
 })
 
 gulp.task('lint', () => {
-  // ESLint ignores files with "node_modules" paths.
-  // So, it's best to have gulp ignore the directory as well.
-  // Also, Be sure to return the stream from the task;
-  // Otherwise, the task may end before the stream has finished.
   return gulp.src(['**/*.js', '!node_modules/**', '!**/vue.js'])
-    // eslint() attaches the lint output to the "eslint" property
-    // of the file object so it can be used by other modules.
     .pipe(eslint())
-    // eslint.format() outputs the lint results to the console.
-    // Alternatively use eslint.formatEach() (see Docs).
     .pipe(eslint.format())
-    // To have the process exit with an error code (1) on
-    // lint error, return the stream and pipe to failAfterError last.
     .pipe(eslint.failAfterError())
 })
 
-gulp.task('scripts', function () {
+gulp.task('scripts_dev', function () {
   // app.js is your main JS file with all your module inclusions
-  return browserify({entries: paths.app, debug: true})
+  return browserify({entries: paths.app, debug: false})
       // .transform(babelify, { presets: ['es2015'] })
+      .transform(babelify, {presets: ['es2015'], sourceMaps: false})
+      .bundle()
+      .pipe(source('app.min.js'))
+      .pipe(gulp.dest(bases.dist))
+})
+
+gulp.task('scripts_prod', function () {
+  // app.js is your main JS file with all your module inclusions
+  return browserify({entries: paths.app, debug: false})
       .transform(babelify, {presets: ['es2015'], sourceMaps: true})
       .bundle()
       .pipe(source('app.min.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init({loadMaps: true}))
-      // .pipe(uglify({ compress: false }))
-      .pipe(uglify())
+      .pipe(uglify({ compress: true }))
       .pipe(sourcemaps.write('./maps'))
       .pipe(gulp.dest(bases.dist))
 })
@@ -107,4 +105,5 @@ gulp.task('watch', function () {
   gulp.watch(paths.images, ['imagemin'])
 })
 
-gulp.task('serve', ['html', 'styles', 'lint', 'scripts', 'imagemin', 'watch'])
+gulp.task('serve', ['html', 'styles', 'lint', 'scripts_dev', 'imagemin', 'watch'])
+gulp.task('build', ['html', 'styles', 'lint', 'scripts_prod', 'imagemin'])

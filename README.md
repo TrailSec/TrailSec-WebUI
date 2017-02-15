@@ -3,8 +3,8 @@ See what's going on with the security guards
 
 **General**
   - Design Logo + Team Name
-  - Setup up static hosting on firebase
-  - Write npm scripts for quick deployment
+  - ~~Setup up static hosting on firebase~~
+  - ~~Write npm scripts for quick deployment~~
   - Create script to generate mock `check in` data (Last 7 days)
   - *[Generate mock 5~10 different routes around campus]*
 
