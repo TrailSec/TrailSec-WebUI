@@ -26,6 +26,7 @@ GoogleMapsHelper.createMap(GOOGLE_MAPS, function () {
 var vm = new Vue({
   el: '#sidepanel',
   data: {
+    now: Date.now(),
     checkInData: [],
     userSettings: { minTime: 0, maxTime: 0 }
   },
@@ -39,8 +40,16 @@ var vm = new Vue({
       //
       //
 
-      this.plotMarkersOnMap(filteredData)
-      return filteredData
+      var processedData = filteredData.map((e, index, arr) => {
+        var timestamp = e.timestamp / 1000
+        var timeAgoString = moment.unix(timestamp).from(this.now)
+        var content = `Justin Toh has arrived at checkpoint #${e.route}`
+        var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
+        return { route: e.route, lat: e.lat, lng: e.lng, content, time, timestamp: e.timestamp }
+      })
+
+      this.plotMarkersOnMap(processedData)
+      return processedData
     }
   },
   methods: {
@@ -53,6 +62,12 @@ var vm = new Vue({
         })
       }
     }
+  },
+  mounted: function () {
+    // Updates `now` variable every minute to recompute the `timeAgoString` value
+    setInterval(() => {
+      this.now = Date.now()
+    }, 1000 * 60)
   }
 })
 
@@ -66,11 +81,5 @@ firebase.database().ref('/geolocation-data').orderByValue().on('value', function
   vm.checkInData = _.chain(snapshot.val())
                       .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)
                       .orderBy('timestamp', 'desc')   // sort by most recent timestamp
-                      .map(function (e, index, arr) {
-                        var timestamp = e.timestamp / 1000
-                        var content = `Justin Toh has arrived at checkpoint #${e.route}`
-                        var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${moment.unix(timestamp).fromNow()})`
-                        return { route: e.route, lat: e.lat, lng: e.lng, content, time, timestamp: e.timestamp }
-                      })
                       .value()                        // unwraps lodash wrapper to get chain() results
 })
