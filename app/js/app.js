@@ -26,6 +26,7 @@ GoogleMapsHelper.createMap(GOOGLE_MAPS, function () {
 var vm = new Vue({
   el: '#sidepanel',
   data: {
+    nowUpdate: false,
     now: Date.now(),
     checkInData: [],
     userSettings: { minTime: 0, maxTime: 0 }
@@ -48,7 +49,13 @@ var vm = new Vue({
         return { route: e.route, lat: e.lat, lng: e.lng, content, time, timestamp: e.timestamp }
       })
 
-      this.plotMarkersOnMap(processedData)
+      // If view updates is triggered by setting the "now" variable, do not redraw markers!
+      if (this.nowUpdate) {
+        this.nowUpdate = false
+      } else {
+        this.plotMarkersOnMap(processedData)
+      }
+
       return processedData
     }
   },
@@ -66,6 +73,7 @@ var vm = new Vue({
   mounted: function () {
     // Updates `now` variable every minute to recompute the `timeAgoString` value
     setInterval(() => {
+      this.nowUpdate = true
       this.now = Date.now()
     }, 1000 * 60)
   }
