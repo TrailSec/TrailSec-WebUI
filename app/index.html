@@ -4,14 +4,19 @@
   <title>Security Device Web UI</title>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <link href="https://ripjar.github.io/material-datetime-picker/picker/css/datepicker.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="./style.min.css">
 </head>
 
 <body id="app" class="main-container">
   <div id="sidepanel" class="block sidepanel-shadow">
     <div class="button-panel">
-      <button id="addMarker" class="sign-in button">Add Marker</button>
+    <!-- <a class="c-btn c-datepicker-btn">Open Picker</a> -->
+      <pre id="events"></pre>
+      <button id="addMarker" class="sign-in button">Set Datetime</button>
       <button id="clearMarkers" class="subscribe button">Clear Marker</button>
     </div>
     <div class="list">
@@ -29,6 +34,7 @@
     </div>
   </div>
   <div id="map"></div>
+  <script type="text/javascript" src="https://ripjar.github.io/material-datetime-picker/picker/js/datepicker.standalone.js"></script>
   <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
   <script type="text/javascript" src="./app.min.js"></script>
 </body>

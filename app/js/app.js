@@ -79,6 +79,25 @@ var vm = new Vue({
   }
 })
 
+console.log('vue done')
+
+// Initialize datatime picker widget
+const picker = new MaterialDatePicker()
+    .on('submit', (val) => {
+      document.querySelector('#events').innerHTML += val.toDate() + '\n'
+    })
+    .on('open', () => {
+      document.querySelector('#events').innerHTML += 'open\n'
+    })
+    .on('close', () => {
+      document.querySelector('#events').innerHTML += 'close\n'
+    })
+
+document.querySelector('.sign-in')
+    .addEventListener('click', () => picker.open() || picker.set(moment()))
+
+console.log('picker done')
+
 // Initialize Firebase
 firebase.initializeApp({
   databaseURL: 'https://cpen391-poc.firebaseio.com/'
@@ -91,3 +110,5 @@ firebase.database().ref('/geolocation-data').orderByValue().on('value', function
                       .orderBy('timestamp', 'desc')   // sort by most recent timestamp
                       .value()                        // unwraps lodash wrapper to get chain() results
 })
+
+console.log('firebase done')
