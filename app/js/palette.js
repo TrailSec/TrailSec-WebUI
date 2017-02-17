@@ -3,7 +3,7 @@ module.exports = {
   'primary-color': '#8BC34A',
   'primary-color-light': '#DCEDC8',
   'primary-color-text': '#212121',
-  'accent-color': '#FFC107',
+  'accent-color': '#F34336',
   'button-text-color': '#fff',
   'primary-text-color': '#333',
   'secondary-text-color': '#999',

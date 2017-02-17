@@ -21,6 +21,7 @@ See what's going on with the security guards
   - ~~Show all recent activity~~
   - ~~Add widgets on sidebar for user to select filter params~~
   - ~~Filter `check in` data by date, time & routes (user?)~~
+  - ~~Style the datetime picker to fit the color theme~~
 
 **Realtime Database (Firebase)**
   - ~~Create animation when marker is created~~

@@ -19,11 +19,11 @@
   justify-content: flex-start; /* flush items to the left */
   align-items: center; /* center items vertically */
 
-  padding: 10px 10px 10px 5px;
-  border-left: 5px solid transparent;
+  padding: 10px 10px 10px 2.5px;
+  border-left: 7.5px solid transparent;
 }
 .list-item-container:hover{
-  border-left: 5px solid $primary-color;
+  border-left: 7.5px solid $primary-color;
 }
 
 .list-item-icon {
