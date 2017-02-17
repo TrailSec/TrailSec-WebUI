@@ -102,5 +102,14 @@ module.exports = {
     // Append newly created route into an array for tracking purposes
     googleMaps.routes.push(thisRoute)
     return thisRoute
+  },
+
+  panTo: function (googleMaps, lat, lng) {
+    const google = googleMaps.window
+    const map = googleMaps.map
+
+    const latLng = new google.maps.LatLng(lat, lng)
+    map.panTo(latLng)
+    map.setZoom(19)
   }
 }

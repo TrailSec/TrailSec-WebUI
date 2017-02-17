@@ -56,12 +56,11 @@ var vm = new Vue({
       })
 
       // If view updates is triggered by setting the "now" variable, do not redraw markers!
-      if (this.nowUpdate) {
-        this.nowUpdate = false
-      } else {
+      if (!this.nowUpdate) {
         this.plotMarkersOnMap(processedData)
       }
 
+      this.nowUpdate = false
       return processedData
     },
     currentFromDatetime: function () {
@@ -79,6 +78,11 @@ var vm = new Vue({
         arr.forEach(function (e, index, arr) {
           GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng)
         })
+      }
+    },
+    centerMapTo: function (lat, lng) {
+      if (GOOGLE_MAPS.map !== undefined && GOOGLE_MAPS.window !== undefined) {
+        GoogleMapsHelper.panTo(GOOGLE_MAPS, lat, lng)
       }
     }
   },

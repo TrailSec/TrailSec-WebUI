@@ -37,7 +37,7 @@
     </div>
     <div class="list" v-else>
       <div v-for="dataEntry in filteredCheckInData" class="list-item">
-        <div class="list-item-container">
+        <div class="list-item-container" v-on:click="centerMapTo(dataEntry.lat, dataEntry.lng)">
           <div class="list-item-icon">
             <img src="./images/map-marker-icon.png">
           </div>

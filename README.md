@@ -10,7 +10,7 @@ See what's going on with the security guards
   - ~~Plot routes on map canvas with a given array of `{lat,long}` data~~
   - ~~Plot markers on map canvas with given `check in` data~~
   - **Add styling to the `infoWindow` (pops up when you hover the markers on the map)**
-  - **Center the map on the marker when we click its corresponding entry on the sidebar-list**
+  - ~~Center the map on the marker when we click its corresponding entry on the sidebar-list~~
 
 **Sidebar**
   - ~~Show all recent activity~~
