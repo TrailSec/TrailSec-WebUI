@@ -19,11 +19,10 @@ See what's going on with the security guards
 
 **Sidebar**
   - ~~Show all recent activity~~
-  - Add widgets on sidebar for user to select filter params
-  - Filter `check in` data by date, time & routes (user?)
+  - ~~Add widgets on sidebar for user to select filter params~~
+  - ~~Filter `check in` data by date, time & routes (user?)~~
 
 **Realtime Database (Firebase)**
   - ~~Create animation when marker is created~~
   - ~~Update sidebar list & markers when firebase has a 'push' event~~
-  - Populate DB with mock data
   - *[Send notifications when firebase has a 'push' event]*
