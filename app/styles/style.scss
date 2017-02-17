@@ -4,10 +4,15 @@ body {
   margin: 0px;
   overflow: hidden;
 }
+#map {
+  z-index: 0;
+  height: 100vh;
+  width: 100vw;
+}
 #sidepanel {
   display: block;
   position: absolute;
-  z-index: 0;
+  z-index: 10;
   height: 100vh;
   width: 400px;
   overflow: hidden;
@@ -17,8 +22,9 @@ body {
 .sidepanel-shadow{
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
 }
-#map {
-  z-index: -10;
-  height: 100vh;
-  width: 100vw;
+.c-scrim {
+  z-index: 20;
+}
+.c-datepicker {
+  z-index: 20;
 }

@@ -27,26 +27,28 @@ var vm = new Vue({
   el: '#sidepanel',
   data: {
     nowUpdate: false,
-    now: Date.now(),
+    now: moment(),
     checkInData: [],
-    userSettings: { minTime: 0, maxTime: 0 }
+    userSettings: {
+      minTime: moment().subtract(1, 'day').unix(),
+      maxTime: moment().unix()
+    }
   },
   computed: {
     // Filters in all the check-in data that user wants to see based on `userSettings`
     filteredCheckInData: function () {
-      var filteredData = this.checkInData
+      // Filtering out check-in data not within our specified timeframe
+      var filteredData = this.checkInData.filter((e, index, arr) => {
+        return (e.timestamp / 1000 >= this.userSettings.minTime) && (e.timestamp / 1000 <= this.userSettings.maxTime)
+      })
 
-      // TODO: add filtering logic
-      //
-      //
-      //
-
+      // Convert data to display on UI
       var processedData = filteredData.map((e, index, arr) => {
         var timestamp = e.timestamp / 1000
         var timeAgoString = moment.unix(timestamp).from(this.now)
         var content = `Justin Toh has arrived at checkpoint #${e.route}`
         var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
-        return { route: e.route, lat: e.lat, lng: e.lng, content, time, timestamp: e.timestamp }
+        return { route: e.route, lat: e.latitude, lng: e.longitude, content, time, timestamp: e.timestamp }
       })
 
       // If view updates is triggered by setting the "now" variable, do not redraw markers!
@@ -57,6 +59,12 @@ var vm = new Vue({
       }
 
       return processedData
+    },
+    currentFromDatetime: function () {
+      return moment.unix(this.userSettings.minTime).format('Do MMM YYYY, HH:mm:ss')
+    },
+    currentToDatetime: function () {
+      return moment.unix(this.userSettings.maxTime).format('Do MMM YYYY, HH:mm:ss')
     }
   },
   methods: {
@@ -74,7 +82,7 @@ var vm = new Vue({
     // Updates `now` variable every minute to recompute the `timeAgoString` value
     setInterval(() => {
       this.nowUpdate = true
-      this.now = Date.now()
+      this.now = moment().unix()
     }, 1000 * 60)
   }
 })
@@ -82,19 +90,20 @@ var vm = new Vue({
 console.log('vue done')
 
 // Initialize datatime picker widget
+// eslint-disable-next-line
 const picker = new MaterialDatePicker()
-    .on('submit', (val) => {
-      document.querySelector('#events').innerHTML += val.toDate() + '\n'
-    })
-    .on('open', () => {
-      document.querySelector('#events').innerHTML += 'open\n'
-    })
-    .on('close', () => {
-      document.querySelector('#events').innerHTML += 'close\n'
-    })
-
-document.querySelector('.sign-in')
-    .addEventListener('click', () => picker.open() || picker.set(moment()))
+    .on('submit', (val) => { vm.userSettings.minTime = val / 1000 })
+// eslint-disable-next-line
+const picker2 = new MaterialDatePicker()
+    .on('submit', (val) => { vm.userSettings.maxTime = val / 1000 })
+document.querySelector('#setFromDatetime')
+  .addEventListener('click', () => {
+    picker.open() || picker.set(vm.userSettings.minTime * 1000)
+  })
+document.querySelector('#setToDatetime')
+  .addEventListener('click', () => {
+    picker2.open() || picker2.set(vm.userSettings.maxTime * 1000)
+  })
 
 console.log('picker done')
 
@@ -104,7 +113,7 @@ firebase.initializeApp({
 })
 
 // Listen for database updates in realtime & feed it into our Vue instance
-firebase.database().ref('/geolocation-data').orderByValue().on('value', function (snapshot) {
+firebase.database().ref('/Geolocation').orderByValue().on('value', function (snapshot) {
   vm.checkInData = _.chain(snapshot.val())
                       .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)
                       .orderBy('timestamp', 'desc')   // sort by most recent timestamp

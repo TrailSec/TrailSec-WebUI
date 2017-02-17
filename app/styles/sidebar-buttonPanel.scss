@@ -1,38 +1,26 @@
 @import 'variables';
 
-.button-panel{
-  text-align: center;
-}
-.button {
-  display: inline-block;
-  width: 175px;
-  line-height: 50px;
-  font-size: 16px;
-  text-align: center;
-  margin: 0 auto;
-  border-radius: 5px;
-  -webkit-transition: background .3s;
-  transition: background .3s;
-
+.sidepanel-control{
   font-family: 'Lato', sans-serif;
   font-weight: 800;
   color: $button-font-color;
   border-width: 0px;
+
+  background: $primary-color;
+  padding: 20px 25px;
+}
+.button {
+  padding: 10px;
+  margin: 10px auto;
+
+  font-size: 16px;
+  text-align: center;
+
+  background: $primary-color-accent;
+  -webkit-transition: background .3s;
+  transition: background .3s;
 }
 .button:hover {
   text-decoration: none;
-}
-.sign-in.button {
-  background: $primary-color;
-  margin: 10px auto;
-}
-.sign-in.button:hover {
-  background: $primary-color-accent;
-}
-.subscribe.button {
-  background: $secondary-color;
-  margin-top: 10px;
-}
-.subscribe.button:hover {
   background: $secondary-color-accent;
 }
