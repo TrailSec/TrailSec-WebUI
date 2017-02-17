@@ -1,13 +1,13 @@
-@import 'variables';
+@import 'palette';
 
 .sidepanel-control{
   font-family: 'Lato', sans-serif;
   font-weight: 800;
-  color: $button-font-color;
+  color: $button-text-color;
   border-width: 0px;
 
   background: $primary-color;
-  padding: 20px 25px;
+  padding: 17px 30px;
 }
 .button {
   padding: 10px;
@@ -16,11 +16,11 @@
   font-size: 16px;
   text-align: center;
 
-  background: $primary-color-accent;
+  background: $primary-color-dark;
   -webkit-transition: background .3s;
   transition: background .3s;
 }
 .button:hover {
   text-decoration: none;
-  background: $secondary-color;
+  background: $accent-color;
 }

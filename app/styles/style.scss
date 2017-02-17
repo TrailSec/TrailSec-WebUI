@@ -1,5 +1,8 @@
+@import 'palette';
+
 body {
   font-family: 'Lato', sans-serif;
+  -webkit-font-smoothing: antialiased;
   float: left;
   margin: 0px;
   overflow: hidden;

@@ -1,14 +1,13 @@
-@import 'variables';
+@import 'palette';
 
 .list {
-  border-top: 1px solid $sidepanel-divider-color;
-  // border-bottom: 1px solid $sidepanel-divider-color;
+  border-top: 1px solid $divider-color;
   height: calc(100vh - 200px);
   overflow-y: auto;
 }
 
 .list-item {
-  border-bottom: 1px solid $sidepanel-divider-color;
+  border-bottom: 1px solid $divider-color;
 }
 .list-item:last-child {
   border-border: none;
@@ -40,13 +39,13 @@
 .list-item-description {
   width: 320px;
   .content {
-    color: $primary-font-color;
+    color: $primary-text-color;
     font-size: 16px;
   }
   .time {
-    color: $secondary-font-color;
+    color: $secondary-text-color;
     font-weight: 300;
-    font-size: 12px;
-    margin: 3px 0px;
+    font-size: 12.5px;
+    margin: 5px 0px 0px 0px;
   }
 }
