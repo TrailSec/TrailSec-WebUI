@@ -3,6 +3,7 @@ import firebase from 'firebase'
 import moment from 'moment'
 import _ from 'lodash'
 
+import palette from './palette'
 import Routes from './route-data'
 
 // Global "Google-Maps" object for tracking created items
@@ -14,14 +15,17 @@ var GOOGLE_MAPS = {
   routes: []
 }
 
+/***************************************************************
+ * Initialize Google Maps
+ *  - Draw routes on Google Map canvas after google maps have finish loading
+ ****************************************************************/
 GoogleMapsHelper.createMap(GOOGLE_MAPS, function () {
-  // Draw routes on Google Map canvas
-  GoogleMapsHelper.drawRoute(GOOGLE_MAPS, Routes.routeA, '#e64c65')
-
-  // Force the Vue instance to re-render after Google Maps have finished loading
-  vm.$forceUpdate()
+  GoogleMapsHelper.drawRoute(GOOGLE_MAPS, Routes.routeA, palette['primary-color'])
 })
 
+/***************************************************************
+ * Initialize Vue instance to power our sidebar
+ ****************************************************************/
 // eslint-disable-next-line
 var vm = new Vue({
   el: '#sidepanel',
@@ -46,7 +50,7 @@ var vm = new Vue({
       var processedData = filteredData.map((e, index, arr) => {
         var timestamp = e.timestamp / 1000
         var timeAgoString = moment.unix(timestamp).from(this.now)
-        var content = `Justin Toh has arrived at checkpoint #${e.route}`
+        var content = `Guard #${e.uid} has arrived at checkpoint #${e.route}`
         var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
         return { route: e.route, lat: e.latitude, lng: e.longitude, content, time, timestamp: e.timestamp }
       })
@@ -83,42 +87,37 @@ var vm = new Vue({
     setInterval(() => {
       this.nowUpdate = true
       this.now = Date.now()
-    }, 1000)
+    }, 1000 * 60)
   }
 })
 
-console.log('vue done')
-
-// Initialize datatime picker widget
+/***************************************************************
+ * Initialize datatime picker widget
+ ****************************************************************/
+ // eslint-disable-next-line
+const fromDatetimePicker = new MaterialDatePicker()
+    .on('submit', value => { vm.userSettings.minTime = value / 1000 })
 // eslint-disable-next-line
-const picker = new MaterialDatePicker()
-    .on('submit', (val) => { vm.userSettings.minTime = val / 1000 })
-// eslint-disable-next-line
-const picker2 = new MaterialDatePicker()
-    .on('submit', (val) => { vm.userSettings.maxTime = val / 1000 })
-document.querySelector('#setFromDatetime')
+const toDatetimePicker = new MaterialDatePicker()
+    .on('submit', value => { vm.userSettings.maxTime = value / 1000 })
+document.querySelector('#fromDatetimeBtn')
   .addEventListener('click', () => {
-    picker.open() || picker.set(vm.userSettings.minTime * 1000)
+    fromDatetimePicker.open() || fromDatetimePicker.set(vm.userSettings.minTime * 1000)
   })
-document.querySelector('#setToDatetime')
+document.querySelector('#toDatetimeBtn')
   .addEventListener('click', () => {
-    picker2.open() || picker2.set(vm.userSettings.maxTime * 1000)
+    toDatetimePicker.open() || toDatetimePicker.set(vm.userSettings.maxTime * 1000)
   })
 
-console.log('picker done')
-
-// Initialize Firebase
-firebase.initializeApp({
-  databaseURL: 'https://cpen391-poc.firebaseio.com/'
-})
-
-// Listen for database updates in realtime & feed it into our Vue instance
-firebase.database().ref('/Geolocation').orderByValue().on('value', function (snapshot) {
+/***************************************************************
+ * Initialize Firebase Connection
+ *  - Listen for database updates in realtime
+ *  - On every update, feed date into our sidepanel via Vue.js
+ ****************************************************************/
+firebase.initializeApp({databaseURL: 'https://cpen391-poc.firebaseio.com/'})
+firebase.database().ref('/Geolocation').on('value', snapshot => {
   vm.checkInData = _.chain(snapshot.val())
                       .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)
                       .orderBy('timestamp', 'desc')   // sort by most recent timestamp
                       .value()                        // unwraps lodash wrapper to get chain() results
-  console.log('firebase update')
 })
-
-console.log('firebase done')

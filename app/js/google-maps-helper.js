@@ -95,7 +95,7 @@ module.exports = {
       path: coordinatesArray,
       strokeColor: color,
       strokeOpacity: 1.0,
-      strokeWeight: 2
+      strokeWeight: 5
     })
     thisRoute.setMap(map)
 
