@@ -31,7 +31,7 @@ var vm = new Vue({
     checkInData: [],
     userSettings: {
       minTime: moment().subtract(1, 'day').unix(),
-      maxTime: moment().unix()
+      maxTime: moment().add(1, 'hour').unix()
     }
   },
   computed: {
@@ -61,10 +61,10 @@ var vm = new Vue({
       return processedData
     },
     currentFromDatetime: function () {
-      return moment.unix(this.userSettings.minTime).format('Do MMM YYYY, HH:mm:ss')
+      return moment.unix(this.userSettings.minTime).format('dddd Do MMM YYYY, HH:mm')
     },
     currentToDatetime: function () {
-      return moment.unix(this.userSettings.maxTime).format('Do MMM YYYY, HH:mm:ss')
+      return moment.unix(this.userSettings.maxTime).format('dddd Do MMM YYYY, HH:mm')
     }
   },
   methods: {
@@ -82,8 +82,8 @@ var vm = new Vue({
     // Updates `now` variable every minute to recompute the `timeAgoString` value
     setInterval(() => {
       this.nowUpdate = true
-      this.now = moment().unix()
-    }, 1000 * 60)
+      this.now = Date.now()
+    }, 1000)
   }
 })
 
@@ -118,6 +118,7 @@ firebase.database().ref('/Geolocation').orderByValue().on('value', function (sna
                       .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)
                       .orderBy('timestamp', 'desc')   // sort by most recent timestamp
                       .value()                        // unwraps lodash wrapper to get chain() results
+  console.log('firebase update')
 })
 
 console.log('firebase done')
