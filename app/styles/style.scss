@@ -10,7 +10,8 @@ body {
 #map {
   z-index: 0;
   height: 100vh;
-  width: 100vw;
+  width: calc(100vw - 400px);
+  margin-left: 400px;
 }
 #sidepanel {
   display: block;
@@ -24,11 +25,4 @@ body {
 }
 .sidepanel-shadow{
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
-}
-#logo {
-  background-color: $primary-color;
-  img {
-    margin: 20px 35px 0px 35px;
-    height: 35px;
-  }
 }
