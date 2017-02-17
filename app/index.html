@@ -6,6 +6,7 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="./style.min.css">
 </head>
 
@@ -21,7 +22,20 @@
         <div id="toDatetimeBtn" class="btn">{{ currentToDatetime }}</div>
       </div>
     </div>
-    <div class="list">
+    <div class="list" v-if="userSettings.maxTime <= userSettings.minTime">
+      <div class="list-message">
+        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        <span>Invalid Date & Time Range</span>
+        <span>Please check if you the time set in the "FROM" field does not exceed the "TO" field</span>
+      </div>
+    </div>
+    <div class="list" v-else-if="filteredCheckInData.length == 0">
+      <div class="list-message">
+        <i class="fa fa-street-view" aria-hidden="true"></i>
+        <span>No one has checked in at this point of time</span>
+      </div>
+    </div>
+    <div class="list" v-else>
       <div v-for="dataEntry in filteredCheckInData" class="list-item">
         <div class="list-item-container">
           <div class="list-item-icon">

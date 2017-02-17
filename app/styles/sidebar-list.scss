@@ -6,6 +6,27 @@
   overflow-y: auto;
 }
 
+.list-message {
+  height: inherit;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: $secondary-text-color;
+
+  i {
+    font-size: 50px;
+    margin: 10px;
+  }
+  span {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+}
+
 .list-item {
   border-bottom: 1px solid $divider-color;
 }
