@@ -30,7 +30,7 @@ module.exports = {
   },
 
   // Create a marker on the google map (based on the provided lat, lng)
-  createMarker: function (googleMaps, lat, lng) {
+  createMarker: function (googleMaps, lat, lng, timestamp) {
     const google = googleMaps.window
     const map = googleMaps.map
 
@@ -55,6 +55,11 @@ module.exports = {
 
     // Append newly created marker into an array for tracking purposes
     googleMaps.markers.push(marker)
+
+    // Create a corresponding infoWindow for marker
+    var infoWindow = this.createInfoWindow(googleMaps, marker, timestamp)
+    googleMaps.infoWindows.push(infoWindow)
+
     return marker
   },
 

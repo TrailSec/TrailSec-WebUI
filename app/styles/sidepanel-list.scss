@@ -1,8 +1,17 @@
 @import 'palette';
 
+#logo {
+  height: 55px;
+  background-color: $primary-color;
+  img {
+    margin: 20px 35px 0px 35px;
+    height: 35px;
+  }
+}
+
 .list {
   border-top: 1px solid $divider-color;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 200px - 55px);
   overflow-y: auto;
 }
 
