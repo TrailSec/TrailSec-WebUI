@@ -1,11 +1,11 @@
 {
-  "name": "web-ui",
+  "name": "trailsec-webui",
   "description": "Web UI for security guard app",
   "version": "1.0.0",
   "main": "dist/app.js",
   "scripts": {
     "dev": "gulp serve",
-    "deploy": "rm -rf /dist && echo 'Clearing out /dist directory' && gulp build && firebase use cpen391-poc && firebase deploy"
+    "deploy": "rm -rf /dist && echo 'Clearing out /dist directory' && gulp build && firebase use cpen391-trailsec && firebase deploy"
   },
   "dependencies": {
     "firebase": "^3.6.8",
@@ -45,14 +45,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tohjustin/webUI.git"
+    "url": "git+https://github.com/tohjustin/TrailSec-WebUI.git"
   },
   "author": "CPEN391-GROUP14",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tohjustin/webUI/issues"
+    "url": "https://github.com/tohjustin/TrailSec-WebUI/issues"
   },
-  "homepage": "https://github.com/tohjustin/webUI#readme",
+  "homepage": "https://github.com/tohjustin/TrailSec-WebUI#readme",
   "engine": {
     "node": "6.9.5"
   }
