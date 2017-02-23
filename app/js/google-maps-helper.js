@@ -36,7 +36,7 @@ module.exports = {
 
     const marker = new google.maps.Marker({
       position: {lat: lat, lng: lng},
-      title: 'TEST',
+      title: `${lat}, ${lng}`,
       // animation: google.maps.Animation.DROP,
       icon: {
         url: '../images/map-marker-icon.png',
