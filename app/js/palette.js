@@ -7,5 +7,7 @@ module.exports = {
   'button-text-color': '#fff',
   'primary-text-color': '#333',
   'secondary-text-color': '#999',
-  'divider-color': '#EEE'
+  'divider-color': '#EEE',
+  'marker-default-color': '#C0392B',
+  'marker-alert-color': '#F9C80E'
 }

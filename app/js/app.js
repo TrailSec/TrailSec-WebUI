@@ -20,7 +20,7 @@ var GOOGLE_MAPS = {
  *  - Draw routes on Google Map canvas after google maps have finish loading
  ****************************************************************/
 GoogleMapsHelper.createMap(GOOGLE_MAPS, function () {
-  GoogleMapsHelper.drawRoute(GOOGLE_MAPS, Routes.routeA, palette['primary-color'])
+  GoogleMapsHelper.drawRoute(GOOGLE_MAPS, Routes.routeA, palette['accent-color'])
 })
 
 /***************************************************************
@@ -76,7 +76,7 @@ var vm = new Vue({
       if (GOOGLE_MAPS.map !== undefined && GOOGLE_MAPS.window !== undefined) {
         GoogleMapsHelper.clearMarkers(GOOGLE_MAPS)
         arr.forEach(function (e, index, arr) {
-          GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp)
+          GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp, palette['marker-default-color'])
         })
       }
     },

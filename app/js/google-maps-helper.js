@@ -2,6 +2,7 @@
 import moment from 'moment'
 import _ from 'lodash'
 import GoogleMapsLoader from 'google-maps'
+import MarkerGenerator from './marker-generator'
 
 module.exports = {
   // Create a map instance to render on the page
@@ -30,7 +31,7 @@ module.exports = {
   },
 
   // Create a marker on the google map (based on the provided lat, lng)
-  createMarker: function (googleMaps, lat, lng, timestamp) {
+  createMarker: function (googleMaps, lat, lng, timestamp, color) {
     const google = googleMaps.window
     const map = googleMaps.map
 
@@ -39,7 +40,7 @@ module.exports = {
       title: `${lat}, ${lng}`,
       // animation: google.maps.Animation.DROP,
       icon: {
-        url: '../images/map-marker-icon.png',
+        url: MarkerGenerator.createSVGMarker(color),
         size: new google.maps.Size(32, 32),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(16, 32)
