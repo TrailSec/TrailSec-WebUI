@@ -51,7 +51,7 @@
       <div v-for="dataEntry in filteredCheckInData" class="list-item">
         <div class="list-item-container" v-on:click="centerMapTo(dataEntry.lat, dataEntry.lng)">
           <div class="list-item-icon">
-            <img src="./images/map-marker-icon.png">
+            <marker-icon :colorpri="dataEntry.markerColor.pri" :colorsec="dataEntry.markerColor.sec"></marker-icon>
           </div>
           <div class="list-item-description">
             <span class="content">{{ dataEntry.content }}</span>

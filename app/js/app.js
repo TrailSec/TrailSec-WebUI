@@ -5,6 +5,7 @@ import _ from 'lodash'
 
 import palette from './palette'
 import Routes from './route-data'
+import markerIcon from './markerIcon'
 
 // Global "Google-Maps" object for tracking created items
 var GOOGLE_MAPS = {
@@ -29,6 +30,9 @@ GoogleMapsHelper.createMap(GOOGLE_MAPS, function () {
 // eslint-disable-next-line
 var vm = new Vue({
   el: '#sidepanel',
+  components: {
+    'markerIcon': markerIcon
+  },
   data: {
     nowUpdate: false,
     now: moment(),
@@ -52,7 +56,7 @@ var vm = new Vue({
         var timeAgoString = moment.unix(timestamp).from(this.now)
         var content = `Guard #${e.uid} has checked-in (Route #${e.route})`
         var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
-        return { route: e.route, lat: e.latitude, lng: e.longitude, content, time, timestamp: timestamp }
+        return { route: e.route, lat: e.latitude, lng: e.longitude, content, time, timestamp: timestamp, markerColor: palette['marker-default-color'] }
       })
 
       // If view updates is triggered by setting the "now" variable, do not redraw markers!
