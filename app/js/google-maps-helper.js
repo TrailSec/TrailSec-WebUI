@@ -31,7 +31,7 @@ module.exports = {
   },
 
   // Create a marker on the google map (based on the provided lat, lng)
-  createMarker: function (googleMaps, lat, lng, timestamp, color) {
+  createMarker: function (googleMaps, lat, lng, timestamp, color, image) {
     const google = googleMaps.window
     const map = googleMaps.map
 
@@ -58,7 +58,7 @@ module.exports = {
     googleMaps.markers.push(marker)
 
     // Create a corresponding infoWindow for marker
-    var infoWindow = this.createInfoWindow(googleMaps, marker, timestamp)
+    var infoWindow = this.createInfoWindow(googleMaps, marker, timestamp, image)
     googleMaps.infoWindows.push(infoWindow)
 
     return marker
@@ -73,13 +73,27 @@ module.exports = {
   },
 
   // Create a marker on the google map (based on the provided lat, lng)
-  createInfoWindow: function (googleMaps, marker, timestamp) {
+  createInfoWindow: function (googleMaps, marker, timestamp, image) {
     const google = googleMaps.window
     const map = googleMaps.map
+    var infoWindow
 
-    const infoWindow = new google.maps.InfoWindow({
-      content: `<div>Checked in at ${moment.unix(timestamp).format('Do MMM YY (ddd), HH:mm:ss')}</div>`
-    })
+    if (image === undefined) {
+      infoWindow = new google.maps.InfoWindow({
+        content: `<div class="infoWindow">
+            <p>Checked in at ${moment.unix(timestamp).format('Do MMM YY (ddd), HH:mm:ss')}</p>
+          </div>`
+      })
+    } else {
+      infoWindow = new google.maps.InfoWindow({
+        content: `<div class="infoImageWindow">
+            <p>Checked in at ${moment.unix(timestamp).format('Do MMM YY (ddd), HH:mm:ss')}</p>
+            <div>
+              <img class="image" src=${image}>
+            </div>
+          </div>`
+      })
+    }
     marker.addListener('mouseover', function () { infoWindow.open(map, marker) })
     marker.addListener('mouseout', function () { infoWindow.close(map, marker) })
     return infoWindow

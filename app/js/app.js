@@ -58,7 +58,16 @@ var vm = new Vue({
         var timeAgoString = moment.unix(timestamp).from(this.now)
         var content = `Guard #${e.uid} has checked in.`
         var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
-        return { route: e.route, lat: e.latitude, lng: e.longitude, content, time, timestamp: timestamp, markerColor: palette['marker-default-color'] }
+        return {
+          route: e.route,
+          lat: e.latitude,
+          lng: e.longitude,
+          content,
+          time,
+          timestamp: timestamp,
+          markerColor: (e.image) ? palette['marker-alert-color'] : palette['marker-default-color'],
+          image: (e.image) ? e.image : undefined
+        }
       })
 
       // If view updates is triggered by setting the "now" variable, do not redraw markers!
@@ -81,8 +90,13 @@ var vm = new Vue({
     plotMarkersOnMap: function (arr) {
       if (GOOGLE_MAPS.map !== undefined && GOOGLE_MAPS.window !== undefined) {
         GoogleMapsHelper.clearMarkers(GOOGLE_MAPS)
+        console.table(arr)
         arr.forEach(function (e, index, arr) {
-          GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp, palette['marker-default-color'])
+          if (e.image === undefined) {
+            GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp, palette['marker-default-color'])
+          } else {
+            GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp, palette['marker-alert-color'], e.image)
+          }
         })
       }
     },
