@@ -34,6 +34,8 @@ var vm = new Vue({
     'markerIcon': markerIcon
   },
   data: {
+    fromDatetimeBtnText: '',
+    toDatetimeBtnText: '',
     nowUpdate: false,
     now: moment(),
     checkInData: [],
@@ -96,6 +98,10 @@ var vm = new Vue({
       this.nowUpdate = true
       this.now = Date.now()
     }, 1000 * 60)
+
+    // Update TO + FROM button text
+    this.fromDatetimeBtnText = this.currentFromDatetime
+    this.toDatetimeBtnText = this.currentToDatetime
   }
 })
 

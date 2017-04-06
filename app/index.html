@@ -27,11 +27,15 @@
     <div class="sidepanel-btn-container">
       <div>
         <div>FROM</div>
-        <div id="fromDatetimeBtn" class="btn">{{ currentFromDatetime }}</div>
+        <div id="fromDatetimeBtn" class="btn"
+              @mouseover="fromDatetimeBtnText='CLICK TO EDIT'"
+              @mouseleave="fromDatetimeBtnText=currentFromDatetime">{{ fromDatetimeBtnText }}</div>
       </div>
       <div>
         <div>TO</div>
-        <div id="toDatetimeBtn" class="btn">{{ currentToDatetime }}</div>
+        <div id="toDatetimeBtn" class="btn"
+              @mouseover="toDatetimeBtnText='CLICK TO EDIT'"
+              @mouseleave="toDatetimeBtnText=currentToDatetime">{{ toDatetimeBtnText }}</div>
       </div>
     </div>
     <div class="list" v-if="userSettings.maxTime <= userSettings.minTime && filteredCheckInData.length == 0">
