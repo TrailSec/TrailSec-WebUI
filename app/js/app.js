@@ -54,7 +54,7 @@ var vm = new Vue({
       var processedData = filteredData.map((e, index, arr) => {
         var timestamp = e.timestamp / 1000
         var timeAgoString = moment.unix(timestamp).from(this.now)
-        var content = `Guard #${e.uid} has checked-in (Route #${e.route})`
+        var content = `Guard #${e.uid} has checked in.`
         var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
         return { route: e.route, lat: e.latitude, lng: e.longitude, content, time, timestamp: timestamp, markerColor: palette['marker-default-color'] }
       })
