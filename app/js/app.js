@@ -122,7 +122,7 @@ document.querySelector('#toDatetimeBtn')
  *  - Listen for database updates in realtime
  *  - On every update, feed date into our sidepanel via Vue.js
  ****************************************************************/
-firebase.initializeApp({databaseURL: 'https://cpen391-trailsec.firebaseio.com/'})
+firebase.initializeApp({databaseURL: 'https://cpen391-poc.firebaseio.com/'})
 firebase.database().ref('/Geolocation').on('value', snapshot => {
   vm.checkInData = _.chain(snapshot.val())
                       .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)
