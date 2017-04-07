@@ -1,17 +1,19 @@
 @import 'palette';
+@import 'variables';
 
 #logo {
-  height: 55px;
   background-color: $primary-color;
   img {
-    margin: 20px 35px 0px 35px;
-    height: 35px;
+    margin: $logo-margin;
+    height: $logo-img-height;
   }
 }
 
 .list {
   border-top: 1px solid $divider-color;
-  height: calc(100vh - 200px - 55px);
+  height: -webkit-calc(100vh - #{$sidepanel-btnContainer-height} - #{$logo-height});
+  height: -moz-calc(100vh - #{$sidepanel-btnContainer-height} - #{$logo-height});
+  height: calc(100vh - #{$sidepanel-btnContainer-height} - #{$logo-height});
   overflow-y: auto;
 }
 
@@ -27,11 +29,12 @@
   color: $secondary-text-color;
 
   i {
-    font-size: 50px;
-    margin: 10px;
+    font-size: $sidepanel-list-message-iconSize;
+    margin: $sidepanel-list-message-iconMargin;
   }
   span {
-    margin-bottom: 10px;
+    font-size: $sidepanel-list-message-fontSize;
+    margin-bottom: $sidepanel-list-message-marginBottom;
     text-align: center;
   }
 }
@@ -58,8 +61,8 @@
 }
 
 .list-item-icon {
-  width: 40px;
-  margin: 10px;
+  width: $sidepanel-list-icon-width;
+  margin: $sidepanel-list-icon-margin;
 
   display: flex;
   flex-direction: row;
@@ -71,12 +74,12 @@
   width: 320px;
   .content {
     color: $primary-text-color;
-    font-size: 16px;
+    font-size: $sidepanel-list-description-fontSize;
   }
   .time {
     color: $secondary-text-color;
     font-weight: 300;
-    font-size: 12.5px;
+    font-size: $sidepanel-list-timestamp-fontSize;
     margin: 5px 0px 0px 0px;
   }
 }

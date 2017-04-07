@@ -1,19 +1,25 @@
 @import 'palette';
+@import 'variables';
 
 .sidepanel-btn-container{
   font-family: 'Lato', sans-serif;
   font-weight: 800;
-  border-width: 0px;
-
   color: $button-text-color;
   background: $primary-color;
-  padding: 17px 30px;
+
+  height: $sidepanel-btnContainer-content-height;
+  border-width: 0px;
+  padding:  $sidepanel-btnContainer-paddingTop $sidepanel-marginLeft $sidepanel-btnContainer-paddingBottom $sidepanel-marginLeft;
+
+  .label {
+    font-size: $sidepanel-btnContainer-label-fontSize;
+  }
 
   .btn {
-    padding: 10px;
-    margin: 10px auto;
+    padding: $sidepanel-btnContainer-padding;
+    margin: $sidepanel-btnContainer-margin;
 
-    font-size: 16px;
+    font-size: $sidepanel-btnContainer-btn-fontSize;
     text-align: center;
     cursor: pointer;
 

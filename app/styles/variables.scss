@@ -1,0 +1,39 @@
+/* Sidepanel */
+$sidepanel-marginLeft: 20px;
+$sidepanel-width: 320px;
+
+/* Logo */
+$logo-img-height: 25px;
+$logo-marginTop: 20px;
+$logo-marginBottom: 0px;
+$logo-margin: $logo-marginTop 0px $logo-marginBottom $sidepanel-marginLeft;
+$logo-height: $logo-img-height + $logo-marginTop + $logo-marginBottom;
+
+/* Sidepanel Button Container */
+$sidepanel-btnContainer-paddingTop: 20px;
+$sidepanel-btnContainer-paddingBottom: 0px;
+$sidepanel-btnContainer-fontSize: 14px;
+
+$sidepanel-btnContainer-height: 160px;
+$sidepanel-btnContainer-paddingTop: 20px;
+$sidepanel-btnContainer-paddingBottom: 0px;
+$sidepanel-btnContainer-content-height: 160px - ($sidepanel-btnContainer-paddingTop + $sidepanel-btnContainer-paddingBottom);
+
+$sidepanel-btnContainer-padding: 8px;
+$sidepanel-btnContainer-margin: 8px auto;
+
+$sidepanel-btnContainer-label-fontSize: 13px;
+$sidepanel-btnContainer-btn-fontSize: 13px;
+
+/* Sidepanel List */
+$sidepanel-list-icon-width: 25px;
+$sidepanel-list-icon-margin: 0px 10px;
+
+$sidepanel-list-description-fontSize: 13px;
+$sidepanel-list-timestamp-fontSize: 10px;
+
+/* Sidepanel Messages */
+$sidepanel-list-message-iconSize: 40px;
+$sidepanel-list-message-iconMargin: 10px;
+$sidepanel-list-message-fontSize: 14px;
+$sidepanel-list-message-marginBottom: 10px;
