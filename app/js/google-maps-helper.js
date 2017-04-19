@@ -9,7 +9,8 @@ module.exports = {
    * Create a map instance to render on the page
    ****************************************************************/
   createMap: function (googleMaps, callback) {
-    GoogleMapsLoader.KEY = 'AIzaSyAAAAffx49N0OrzfkADhTms8cc-IFzrUHI'
+    // Secure the key by restricting access on Google API manager
+    GoogleMapsLoader.KEY = 'AIzaSyAmXZa39VvogISSdytzFY-DGxxNZsu4Pj4'
     GoogleMapsLoader.REGION = 'CA'
     GoogleMapsLoader.load(google => {
       googleMaps.window = google
