@@ -39,7 +39,9 @@ var vm = new Vue({
     nowUpdate: false,
     now: moment(),
     userSettings: {
-      minTime: moment().subtract(1, 'day').unix(),
+      // Set MIN_TIME to 20th FEB 2017 for demo purposes
+      minTime: 1487577600,
+      // minTime: moment().subtract(1, 'year').unix(),
       maxTime: moment().add(1, 'hour').unix()
     },
     stores: {
