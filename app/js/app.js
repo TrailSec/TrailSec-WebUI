@@ -44,7 +44,7 @@ var vm = new Vue({
       // minTime: moment().subtract(1, 'year').unix(),
       maxTime: moment().add(1, 'hour').unix()
     },
-    stores: {
+    store: {
       checkInData: [],
       users: {},
       routes: {}
@@ -54,7 +54,7 @@ var vm = new Vue({
     // Filters in all the check-in data that user wants to see based on `userSettings`
     filteredCheckInData: function () {
       // Filtering out check-in data not within our specified timeframe
-      var filteredData = this.stores.checkInData.filter((e, index, arr) => {
+      var filteredData = this.store.checkInData.filter((e, index, arr) => {
         return (e.timestamp / 1000 >= this.userSettings.minTime) && (e.timestamp / 1000 <= this.userSettings.maxTime)
       })
 
@@ -62,7 +62,7 @@ var vm = new Vue({
       var processedData = filteredData.map((e, index, arr) => {
         var timestamp = e.timestamp / 1000
         var timeAgoString = moment.unix(timestamp).from(this.now)
-        var content = `Guard #${e.uid} has checked in.`
+        var content = `Guard [${this.store.users[e.uid]}] has checked in.`
         var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
         return {
           route: e.route,
@@ -152,14 +152,14 @@ document.querySelector('#toDatetimeBtn')
 firebase.initializeApp({databaseURL: 'https://cpen391-trailsec.firebaseio.com/'}) // PRODUCTION
 
 firebase.database().ref('/CheckedInData').on('value', snapshot => {
-  vm.stores.checkInData = _.chain(snapshot.val())
+  vm.store.checkInData = _.chain(snapshot.val())
                       .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)
                       .orderBy('timestamp', 'desc')   // sort by most recent timestamp
                       .value()                        // unwraps lodash wrapper to get chain() results
 })
 firebase.database().ref('/Users').on('value', snapshot => {
-  vm.stores.users = snapshot.val()
+  vm.store.users = snapshot.val()
 })
 firebase.database().ref('/Routes').on('value', snapshot => {
-  vm.stores.routes = snapshot.val()
+  vm.store.routes = snapshot.val()
 })
