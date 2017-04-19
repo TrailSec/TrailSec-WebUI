@@ -66,10 +66,13 @@ module.exports = {
 
   // Remove all markers
   clearMarkers: function (googleMaps) {
-    // for (let i = 0; i < googleMaps.markers.length; i++) {
-    //   googleMaps.markers[i].setMap(null)
-    // }
-    // googleMaps.markers.length = 0
+    for (var key in googleMaps.markers) {
+      googleMaps.infoWindows[key].close(googleMaps.map, googleMaps.markers[key])
+      googleMaps.infoWindows[key] = null
+      googleMaps.markers[key].setMap(null)
+    }
+    googleMaps.markers = {}
+    googleMaps.infoWindows = {}
   },
 
   /***************************************************************
