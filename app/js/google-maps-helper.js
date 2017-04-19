@@ -58,7 +58,7 @@ module.exports = {
     googleMaps.markers[dataId] = marker
 
     // Create a corresponding infoWindow for marker
-    var infoWindow = this.createInfoWindow(googleMaps, marker, timestamp, image)
+    const infoWindow = this.createInfoWindow(googleMaps, marker, timestamp, image)
     googleMaps.infoWindows[dataId] = infoWindow
 
     return marker
@@ -66,7 +66,7 @@ module.exports = {
 
   // Remove all markers
   clearMarkers: function (googleMaps) {
-    for (var key in googleMaps.markers) {
+    for (let key in googleMaps.markers) {
       googleMaps.infoWindows[key].close(googleMaps.map, googleMaps.markers[key])
       googleMaps.infoWindows[key] = null
       googleMaps.markers[key].setMap(null)
@@ -81,7 +81,7 @@ module.exports = {
   createInfoWindow: function (googleMaps, marker, timestamp, image) {
     const google = googleMaps.window
     const map = googleMaps.map
-    var infoWindow
+    let infoWindow
 
     if (image === undefined) {
       infoWindow = new google.maps.InfoWindow({

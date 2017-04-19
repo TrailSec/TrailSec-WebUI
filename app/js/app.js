@@ -7,7 +7,7 @@ import palette from './palette'
 import markerIcon from './markerIcon'
 
 // Global "Google-Maps" object for tracking created items
-var GOOGLE_MAPS = {
+let GOOGLE_MAPS = {
   window: undefined,
   map: undefined,
   markers: {},
@@ -25,7 +25,7 @@ GoogleMapsHelper.createMap(GOOGLE_MAPS)
  * Initialize Vue instance to power our sidebar
  ****************************************************************/
 // eslint-disable-next-line
-var vm = new Vue({
+let vm = new Vue({
   el: '#sidepanel',
   components: {
     'markerIcon': markerIcon
@@ -51,30 +51,22 @@ var vm = new Vue({
     // Filters in all the check-in data that user wants to see based on `userSettings`
     filteredCheckInData: function () {
       // Filtering out check-in data not within our specified timeframe
-      var filteredData = this.store.checkInData.filter((e, index, arr) => {
+      const filteredData = this.store.checkInData.filter((e, index, arr) => {
         return (e.timestamp / 1000 >= this.userSettings.minTime) && (e.timestamp / 1000 <= this.userSettings.maxTime)
       })
 
       // Convert data to display on UI
-      var processedData = filteredData.map((e, index, arr) => {
-        var timestamp = e.timestamp / 1000
-        var timeAgoString = moment.unix(timestamp).from(this.now)
-        var content = (e.image && e.image !== '') ? `Guard [${this.store.users[e.uid].name}] has uploaded an image.`
+      const processedData = filteredData.map((e, index, arr) => {
+        const timestamp = e.timestamp / 1000
+        const timeAgoString = moment.unix(timestamp).from(this.now)
+        const time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
+        const content = (e.image && e.image !== '') ? `Guard [${this.store.users[e.uid].name}] has uploaded an image.`
                                                   : `Guard [${this.store.users[e.uid].name}] has checked in.`
-        var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
-        return {
-          route: e.route,
-          lat: e.latitude,
-          lng: e.longitude,
-          id: e.id,
-          content,
-          time,
-          timestamp: timestamp,
-          markerColor: (e.image && e.image !== '') ? palette['marker-alert-color']
-                       : (this.store.users[e.uid]) ? this.store.users[e.uid].markerColor
-                       : palette['marker-default-color'],
-          image: (e.image && e.image !== '') ? e.image : undefined
-        }
+        const markerColor = (e.image && e.image !== '') ? palette['marker-alert-color']
+                                                      : (this.store.users[e.uid]) ? this.store.users[e.uid].markerColor
+                                                      : palette['marker-default-color']
+        const image = (e.image && e.image !== '') ? e.image : undefined
+        return { route: e.route, lat: e.latitude, lng: e.longitude, id: e.id, content, time, timestamp, markerColor, image }
       })
 
       // If view updates is triggered by setting the "now" variable, do not redraw markers!
@@ -171,7 +163,7 @@ firebase.database().ref('/Routes').on('value', snapshot => {
                       .value()                        // unwraps lodash wrapper to get chain() results
 
   // Draw every route on Google Maps
-  for (var key in vm.store.routes) {
+  for (let key in vm.store.routes) {
     GoogleMapsHelper.drawRoute(GOOGLE_MAPS, vm.store.routes[key], palette['primary-color'])
   }
 })
