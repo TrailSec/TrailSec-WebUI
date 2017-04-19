@@ -53,7 +53,10 @@
     </div>
     <div class="list" v-else>
       <div v-for="dataEntry in filteredCheckInData" class="list-item">
-        <div class="list-item-container" v-on:click="centerMapTo(dataEntry.lat, dataEntry.lng)">
+        <div class="list-item-container"
+              @click="centerMapTo(dataEntry.lat, dataEntry.lng)"
+              @mouseover="showInfoWindow(dataEntry.id)"
+              @mouseout="hideInfoWindow(dataEntry.id)">
           <div class="list-item-icon">
             <marker-icon :colorpri="dataEntry.markerColor.pri" :colorsec="dataEntry.markerColor.sec"></marker-icon>
           </div>

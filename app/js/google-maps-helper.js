@@ -31,7 +31,7 @@ module.exports = {
   /***************************************************************
    * Create a marker on the google map (based on the provided lat, lng)
    ****************************************************************/
-  createMarker: function (googleMaps, lat, lng, timestamp, color, image) {
+  createMarker: function (googleMaps, dataId, lat, lng, timestamp, color, image) {
     const google = googleMaps.window
     const map = googleMaps.map
 
@@ -55,21 +55,21 @@ module.exports = {
     })
 
     // Append newly created marker into an array for tracking purposes
-    googleMaps.markers.push(marker)
+    googleMaps.markers[dataId] = marker
 
     // Create a corresponding infoWindow for marker
     var infoWindow = this.createInfoWindow(googleMaps, marker, timestamp, image)
-    googleMaps.infoWindows.push(infoWindow)
+    googleMaps.infoWindows[dataId] = infoWindow
 
     return marker
   },
 
   // Remove all markers
   clearMarkers: function (googleMaps) {
-    for (let i = 0; i < googleMaps.markers.length; i++) {
-      googleMaps.markers[i].setMap(null)
-    }
-    googleMaps.markers.length = 0
+    // for (let i = 0; i < googleMaps.markers.length; i++) {
+    //   googleMaps.markers[i].setMap(null)
+    // }
+    // googleMaps.markers.length = 0
   },
 
   /***************************************************************

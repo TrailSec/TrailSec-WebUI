@@ -10,8 +10,8 @@ import markerIcon from './markerIcon'
 var GOOGLE_MAPS = {
   window: undefined,
   map: undefined,
-  markers: [],
-  infoWindows: [],
+  markers: {},
+  infoWindows: {},
   routes: []
 }
 
@@ -66,6 +66,7 @@ var vm = new Vue({
           route: e.route,
           lat: e.latitude,
           lng: e.longitude,
+          id: e.id,
           content,
           time,
           timestamp: timestamp,
@@ -98,7 +99,7 @@ var vm = new Vue({
         GoogleMapsHelper.clearMarkers(GOOGLE_MAPS)
         // Draw in reverse order because we want the latest marker to be drawn over the old ones
         for (let i = arr.length - 1; i >= 0; i--) {
-          GoogleMapsHelper.createMarker(GOOGLE_MAPS, arr[i].lat, arr[i].lng, arr[i].timestamp, arr[i].markerColor, arr[i].image)
+          GoogleMapsHelper.createMarker(GOOGLE_MAPS, arr[i].id, arr[i].lat, arr[i].lng, arr[i].timestamp, arr[i].markerColor, arr[i].image)
         }
       }
     },
@@ -106,6 +107,16 @@ var vm = new Vue({
       if (GOOGLE_MAPS.map !== undefined && GOOGLE_MAPS.window !== undefined) {
         GoogleMapsHelper.panTo(GOOGLE_MAPS, lat, lng)
       }
+    },
+    showInfoWindow: function (dataId) {
+      const thisInfoWindow = GOOGLE_MAPS.infoWindows[dataId]
+      const thisMarker = GOOGLE_MAPS.markers[dataId]
+      thisInfoWindow.open(GOOGLE_MAPS.map, thisMarker)
+    },
+    hideInfoWindow: function (dataId) {
+      const thisInfoWindow = GOOGLE_MAPS.infoWindows[dataId]
+      const thisMarker = GOOGLE_MAPS.markers[dataId]
+      thisInfoWindow.close(GOOGLE_MAPS.map, thisMarker)
     }
   },
   mounted: function () {
