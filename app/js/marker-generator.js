@@ -1,3 +1,7 @@
+/***************************************************************
+ * Returns a colored SVG marker based on the input "color" param
+ * NOTE: Color requires 2 properties "pri" & "sec"
+ ****************************************************************/
 module.exports = {
   createSVGMarker: function (color) {
     return `data:image/svg+xml;utf-8,

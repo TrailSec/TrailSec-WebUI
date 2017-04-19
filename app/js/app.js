@@ -145,11 +145,12 @@ document.querySelector('#toDatetimeBtn')
 
 /***************************************************************
  * Initialize Firebase Connection
- *  - Listen for database updates in realtime
- *  - On every update, feed date into our sidepanel via Vue.js
+ *  - Listen for database updates in real-time
+ *  - On every update, feed new data into our sidepanel via Vue.js's Reactive Props
  ****************************************************************/
 // firebase.initializeApp({databaseURL: 'https://cpen391-poc.firebaseio.com/'}) // STAGING
 firebase.initializeApp({databaseURL: 'https://cpen391-trailsec.firebaseio.com/'}) // PRODUCTION
+
 firebase.database().ref('/CheckedInData').on('value', snapshot => {
   vm.stores.checkInData = _.chain(snapshot.val())
                       .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)

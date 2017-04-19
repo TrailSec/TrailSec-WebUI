@@ -5,7 +5,9 @@ import GoogleMapsLoader from 'google-maps'
 import MarkerGenerator from './marker-generator'
 
 module.exports = {
-  // Create a map instance to render on the page
+  /***************************************************************
+   * Create a map instance to render on the page
+   ****************************************************************/
   createMap: function (googleMaps, callback) {
     GoogleMapsLoader.KEY = 'AIzaSyAAAAffx49N0OrzfkADhTms8cc-IFzrUHI'
     GoogleMapsLoader.REGION = 'CA'
@@ -18,19 +20,14 @@ module.exports = {
         streetViewControl: false // disable STREETVIEW
       })
 
-      // google.maps.event.addListener(MAP_INSTANCE, 'click', function (event) {
-      //   var lat = event.latLng.lat()
-      //   var lng = event.latLng.lng()
-      //   // populate yor box/field with lat, lng
-      //   console.log(lat + ', ' + lng)
-      // })
-
       // Execute CALLBACK function when the Google Maps has finished loading
       google.maps.event.addListenerOnce(googleMaps.map, 'idle', callback)
     })
   },
 
-  // Create a marker on the google map (based on the provided lat, lng)
+  /***************************************************************
+   * Create a marker on the google map (based on the provided lat, lng)
+   ****************************************************************/
   createMarker: function (googleMaps, lat, lng, timestamp, color, image) {
     const google = googleMaps.window
     const map = googleMaps.map
@@ -38,7 +35,7 @@ module.exports = {
     const marker = new google.maps.Marker({
       position: {lat: lat, lng: lng},
       title: `${lat}, ${lng}`,
-      // animation: google.maps.Animation.DROP,
+      animation: google.maps.Animation.DROP,
       icon: {
         url: MarkerGenerator.createSVGMarker(color),
         size: new google.maps.Size(32, 32),
@@ -72,7 +69,9 @@ module.exports = {
     googleMaps.markers.length = 0
   },
 
-  // Create a marker on the google map (based on the provided lat, lng)
+  /***************************************************************
+   * Create a marker on the google map (based on the provided lat, lng)
+   ****************************************************************/
   createInfoWindow: function (googleMaps, marker, timestamp, image) {
     const google = googleMaps.window
     const map = googleMaps.map
@@ -99,7 +98,9 @@ module.exports = {
     return infoWindow
   },
 
-  // Draws a polyline on the google map (based on the provided array of coordinates)
+  /***************************************************************
+   * Draws a polyline on the google map (based on the provided array of coordinates)
+   ****************************************************************/
   drawRoute: function (googleMaps, coordinatesArray, color) {
     const google = googleMaps.window
     const map = googleMaps.map

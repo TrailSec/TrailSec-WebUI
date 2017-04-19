@@ -1,3 +1,6 @@
+/***************************************************************
+ * Vue.js Component to diplay SVG Markers on our sidepanel
+ ****************************************************************/
 var markerIcon = {
   props: ['colorpri', 'colorsec'],
   template: `
