@@ -22,7 +22,9 @@ module.exports = {
       })
 
       // Execute CALLBACK function when the Google Maps has finished loading
-      google.maps.event.addListenerOnce(googleMaps.map, 'idle', callback)
+      if (callback) {
+        google.maps.event.addListenerOnce(googleMaps.map, 'idle', callback)
+      }
     })
   },
 

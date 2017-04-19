@@ -4,7 +4,6 @@ import moment from 'moment'
 import _ from 'lodash'
 
 import palette from './palette'
-import Routes from './route-data'
 import markerIcon from './markerIcon'
 
 // Global "Google-Maps" object for tracking created items
@@ -20,9 +19,7 @@ var GOOGLE_MAPS = {
  * Initialize Google Maps
  *  - Draw routes on Google Map canvas after google maps have finish loading
  ****************************************************************/
-GoogleMapsHelper.createMap(GOOGLE_MAPS, function () {
-  GoogleMapsHelper.drawRoute(GOOGLE_MAPS, Routes.routeA, palette['primary-color'])
-})
+GoogleMapsHelper.createMap(GOOGLE_MAPS)
 
 /***************************************************************
  * Initialize Vue instance to power our sidebar
@@ -97,7 +94,6 @@ var vm = new Vue({
     plotMarkersOnMap: function (arr) {
       if (GOOGLE_MAPS.map !== undefined && GOOGLE_MAPS.window !== undefined) {
         GoogleMapsHelper.clearMarkers(GOOGLE_MAPS)
-        console.table(arr)
         arr.forEach(function (e, index, arr) {
           if (e.image && e.image !== '') {
             GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp, palette['marker-alert-color'], e.image)
@@ -129,7 +125,7 @@ var vm = new Vue({
 /***************************************************************
  * Initialize datatime picker widget
  ****************************************************************/
- // eslint-disable-next-line
+// eslint-disable-next-line
 const fromDatetimePicker = new MaterialDatePicker()
     .on('submit', value => { vm.userSettings.minTime = value / 1000 })
 // eslint-disable-next-line
@@ -154,13 +150,28 @@ firebase.initializeApp({databaseURL: 'https://cpen391-trailsec.firebaseio.com/'}
 
 firebase.database().ref('/CheckedInData').on('value', snapshot => {
   vm.store.checkInData = _.chain(snapshot.val())
-                      .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)
-                      .orderBy('timestamp', 'desc')   // sort by most recent timestamp
-                      .value()                        // unwraps lodash wrapper to get chain() results
+                          .mapValues((value, key) => {    // preserve keys before converting to array
+                            value.id = key
+                            return value
+                          })
+                          .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)
+                          .orderBy('timestamp', 'desc')   // sort by most recent timestamp
+                          .value()                        // unwraps lodash wrapper to get chain() results
 })
 firebase.database().ref('/Users').on('value', snapshot => {
   vm.store.users = snapshot.val()
 })
 firebase.database().ref('/Routes').on('value', snapshot => {
-  vm.store.routes = snapshot.val()
+  vm.store.routes = _.chain(snapshot.val())
+                      .mapValues((value, key) => {
+                        // For each route, every coordinate object will have its corresponding index mapped into 'id' so that Google Maps SDK can draw it
+                        value.map((e, index, arr) => { e.id = index; return e })
+                        return value
+                      })
+                      .value()                        // unwraps lodash wrapper to get chain() results
+
+  // Draw every route on Google Maps
+  for (var key in vm.store.routes) {
+    GoogleMapsHelper.drawRoute(GOOGLE_MAPS, vm.store.routes[key], palette['primary-color'])
+  }
 })
