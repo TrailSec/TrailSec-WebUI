@@ -62,7 +62,8 @@ var vm = new Vue({
       var processedData = filteredData.map((e, index, arr) => {
         var timestamp = e.timestamp / 1000
         var timeAgoString = moment.unix(timestamp).from(this.now)
-        var content = `Guard [${this.store.users[e.uid]}] has checked in.`
+        var content = (e.image && e.image !== '') ? `Guard [${this.store.users[e.uid]}] has uploaded an image.`
+                                                  : `Guard [${this.store.users[e.uid]}] has checked in.`
         var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
         return {
           route: e.route,
@@ -71,8 +72,8 @@ var vm = new Vue({
           content,
           time,
           timestamp: timestamp,
-          markerColor: (e.image) ? palette['marker-alert-color'] : palette['marker-default-color'],
-          image: (e.image) ? e.image : undefined
+          markerColor: (e.image && e.image !== '') ? palette['marker-alert-color'] : palette['marker-default-color'],
+          image: (e.image && e.image !== '') ? e.image : undefined
         }
       })
 
@@ -98,10 +99,10 @@ var vm = new Vue({
         GoogleMapsHelper.clearMarkers(GOOGLE_MAPS)
         console.table(arr)
         arr.forEach(function (e, index, arr) {
-          if (e.image === undefined) {
-            GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp, palette['marker-default-color'])
-          } else {
+          if (e.image && e.image !== '') {
             GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp, palette['marker-alert-color'], e.image)
+          } else {
+            GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp, palette['marker-default-color'])
           }
         })
       }

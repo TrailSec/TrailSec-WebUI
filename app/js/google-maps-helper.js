@@ -86,7 +86,7 @@ module.exports = {
     } else {
       infoWindow = new google.maps.InfoWindow({
         content: `<div class="infoWindow infoImageWindow">
-            <p>Checked in at ${moment.unix(timestamp).format('Do MMM YY (ddd), HH:mm:ss')}</p>
+            <p>Uploaded at ${moment.unix(timestamp).format('Do MMM YY (ddd), HH:mm:ss')}</p>
             <div>
               <img class="image" src=${image}>
             </div>

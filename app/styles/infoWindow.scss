@@ -4,6 +4,7 @@
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
   font-size: 16px;
   p {
     margin: 0px;
@@ -11,13 +12,22 @@
 }
 
 .infoImageWindow {
-  max-width: 400px;
-}
+  max-width: 300px;
+  max-height: 300px;
 
-.infoImageWindow .image {
-  margin-top: 5px;
-  max-width: 100%;
-  max-height: 100%;
+  p {
+    margin: 0px 0px 5px 0px;
+  }
+
+  div {
+    overflow: hidden;
+    text-align: center;
+
+    .image {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
 }
 
 // Remove delete icon on infoWindow
