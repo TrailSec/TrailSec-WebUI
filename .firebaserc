@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "cpen391-poc"
+    "staging": "cpen391-poc",
+    "production": "cpen391-trailsec"
   }
 }

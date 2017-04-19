@@ -1,20 +1,22 @@
 {
   "name": "trailsec-webui",
-  "description": "Web UI for security guard app",
-  "version": "1.0.0",
+  "description": "Web Application for displaying location data checked-in by TrailSec App & devices",
+  "version": "2.0.0",
   "main": "dist/app.js",
   "scripts": {
     "dev": "gulp serve",
-    "deploy": "rm -rf /dist && echo 'Clearing out /dist directory' && gulp build && firebase use cpen391-poc && firebase deploy"
+    "clean": "rm -rf /dist && echo 'Clearing out /dist directory'",
+    "deploy_stage": "npm run clean && gulp build && firebase use staging && firebase deploy",
+    "deploy_production": "npm run clean && gulp build && firebase use production && firebase deploy"
   },
   "dependencies": {
     "firebase": "^3.6.8",
-    "firebase-tools": "^3.2.3",
-    "google-maps": "^3.2.1",
-    "lodash": "^4.17.4",
-    "moment": "^2.17.1"
+    "firebase-tools": "^3.2.3"
   },
   "devDependencies": {
+    "google-maps": "^3.2.1",
+    "lodash": "^4.17.4",
+    "moment": "^2.17.1",
     "babel-eslint": "^7.1.1",
     "babel-preset-es2015": "^6.22.0",
     "babelify": "^7.3.0",
@@ -43,16 +45,6 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tohjustin/TrailSec-WebUI.git"
-  },
-  "author": "CPEN391-GROUP14",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/tohjustin/TrailSec-WebUI/issues"
-  },
-  "homepage": "https://github.com/tohjustin/TrailSec-WebUI#readme",
   "engine": {
     "node": "6.9.5"
   }
