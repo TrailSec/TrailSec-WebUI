@@ -59,8 +59,8 @@ var vm = new Vue({
       var processedData = filteredData.map((e, index, arr) => {
         var timestamp = e.timestamp / 1000
         var timeAgoString = moment.unix(timestamp).from(this.now)
-        var content = (e.image && e.image !== '') ? `Guard [${this.store.users[e.uid]}] has uploaded an image.`
-                                                  : `Guard [${this.store.users[e.uid]}] has checked in.`
+        var content = (e.image && e.image !== '') ? `Guard [${this.store.users[e.uid].name}] has uploaded an image.`
+                                                  : `Guard [${this.store.users[e.uid].name}] has checked in.`
         var time = moment.unix(timestamp).format('Do MMM YYYY, HH:mm:ss') + ` (${timeAgoString})`
         return {
           route: e.route,
@@ -69,7 +69,9 @@ var vm = new Vue({
           content,
           time,
           timestamp: timestamp,
-          markerColor: (e.image && e.image !== '') ? palette['marker-alert-color'] : palette['marker-default-color'],
+          markerColor: (e.image && e.image !== '') ? palette['marker-alert-color']
+                       : (this.store.users[e.uid]) ? this.store.users[e.uid].markerColor
+                       : palette['marker-default-color'],
           image: (e.image && e.image !== '') ? e.image : undefined
         }
       })
@@ -94,13 +96,10 @@ var vm = new Vue({
     plotMarkersOnMap: function (arr) {
       if (GOOGLE_MAPS.map !== undefined && GOOGLE_MAPS.window !== undefined) {
         GoogleMapsHelper.clearMarkers(GOOGLE_MAPS)
-        arr.forEach(function (e, index, arr) {
-          if (e.image && e.image !== '') {
-            GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp, palette['marker-alert-color'], e.image)
-          } else {
-            GoogleMapsHelper.createMarker(GOOGLE_MAPS, e.lat, e.lng, e.timestamp, palette['marker-default-color'])
-          }
-        })
+        // Draw in reverse order because we want the latest marker to be drawn over the old ones
+        for (let i = arr.length - 1; i >= 0; i--) {
+          GoogleMapsHelper.createMarker(GOOGLE_MAPS, arr[i].lat, arr[i].lng, arr[i].timestamp, arr[i].markerColor, arr[i].image)
+        }
       }
     },
     centerMapTo: function (lat, lng) {
@@ -148,16 +147,6 @@ document.querySelector('#toDatetimeBtn')
 // firebase.initializeApp({databaseURL: 'https://cpen391-poc.firebaseio.com/'}) // STAGING
 firebase.initializeApp({databaseURL: 'https://cpen391-trailsec.firebaseio.com/'}) // PRODUCTION
 
-firebase.database().ref('/CheckedInData').on('value', snapshot => {
-  vm.store.checkInData = _.chain(snapshot.val())
-                          .mapValues((value, key) => {    // preserve keys before converting to array
-                            value.id = key
-                            return value
-                          })
-                          .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)
-                          .orderBy('timestamp', 'desc')   // sort by most recent timestamp
-                          .value()                        // unwraps lodash wrapper to get chain() results
-})
 firebase.database().ref('/Users').on('value', snapshot => {
   vm.store.users = snapshot.val()
 })
@@ -174,4 +163,14 @@ firebase.database().ref('/Routes').on('value', snapshot => {
   for (var key in vm.store.routes) {
     GoogleMapsHelper.drawRoute(GOOGLE_MAPS, vm.store.routes[key], palette['primary-color'])
   }
+})
+firebase.database().ref('/CheckedInData').on('value', snapshot => {
+  vm.store.checkInData = _.chain(snapshot.val())
+                          .mapValues((value, key) => {    // preserve keys before converting to array
+                            value.id = key
+                            return value
+                          })
+                          .toArray()                      // convert `rawData` into an array (removes firebase's pushId keys)
+                          .orderBy('timestamp', 'desc')   // sort by most recent timestamp
+                          .value()                        // unwraps lodash wrapper to get chain() results
 })

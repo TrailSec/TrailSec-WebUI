@@ -11,8 +11,8 @@ module.exports = {
   'secondary-text-color': '#999',
   // Map Markers
   'marker-default-color': {
-    pri: '#F34336',
-    sec: '#BF3A2C'
+    pri: '#4A4A4A',
+    sec: '#7E7D7E'
   },
   'marker-alert-color': {
     pri: '#009FFD',
