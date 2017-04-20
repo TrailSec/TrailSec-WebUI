@@ -21,7 +21,6 @@ npm install # you can use "yarn" instead
 ```
 
 ## Getting Started
-
 ``` bash
 # serve with gulp & browser-sync at localhost:3000
 npm run dev

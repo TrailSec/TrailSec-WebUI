@@ -6,6 +6,7 @@
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
   font-size: 16px;
+  font-weight: 400;
   p {
     margin: 0px;
   }
@@ -14,6 +15,7 @@
 .infoImageWindow {
   max-width: 300px;
   max-height: 300px;
+  text-align: center;
 
   p {
     margin: 0px 0px 5px 0px;
@@ -21,7 +23,6 @@
 
   div {
     overflow: hidden;
-    text-align: center;
 
     .image {
       max-width: 100%;
@@ -30,7 +31,38 @@
   }
 }
 
+.gm-style-iw div {
+  border-radius: 2px;
+  background-color: white;
+  padding: 5px 3px;
+}
+
+#map > div > div > div:nth-child(1) > div:nth-child(4) > div:nth-child(4) > * > div.gm-style-iw > div:nth-child(1) {
+  -webkit-box-shadow: rgba(0,0,0,.6) 0px 0px 6px 0px;
+  -moz-box-shadow: rgba(0,0,0,.6) 0px 0px 6px 0px;
+  box-shadow: rgba(0,0,0,.6) 0px 0px 6px 0px;
+}
+.gm-style-iw > * > div {
+  box-shadow: none;
+}
+#map > div > div > div:nth-child(1) > div:nth-child(4) > div:nth-child(4) > * {
+  // margin-left: 3px;
+}
+#map > div > div > div:nth-child(1) > div:nth-child(4) > div:nth-child(4) > * > div.gm-style-iw {
+  top: 18px !important;
+  left: 25px !important;
+}
+
+#map > div > div > div:nth-child(1) > div:nth-child(4) > div:nth-child(4) > * > div:nth-child(1) > div:nth-child(3) {
+  z-index: 10;
+}
+
 // Remove delete icon on infoWindow
-.gm-style .gm-style-iw ~ div {
+.gm-style .gm-style-iw ~ div,
+// White background
+#map > div > div > div:nth-child(1) > div:nth-child(4) > div:nth-child(4) > * > div:nth-child(1) > div:nth-child(4),
+// Shadow
+#map > div > div > div:nth-child(1) > div:nth-child(4) > div:nth-child(4) > * > div:nth-child(1) > div:nth-child(2),
+#map > div > div > div:nth-child(1) > div:nth-child(4) > div:nth-child(4) > * > div:nth-child(1) > div:nth-child(1) {
   display: none;
 }
